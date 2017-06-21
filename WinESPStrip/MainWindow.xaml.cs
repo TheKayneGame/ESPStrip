@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+
 
 namespace WinESPStrip
 {
@@ -26,6 +17,9 @@ namespace WinESPStrip
 		static int Port = 53686;
 		string ESPStripHost = "ESPStrip.local";
 		string EspIP;
+
+		string buffCommand;
+
 		UdpClient Client = new UdpClient(Port);
 
 		int r;
@@ -43,7 +37,7 @@ namespace WinESPStrip
 			ConnectToESP();
 		}
 
-		private void SendUDPToLED(string command)
+		private void SendUDPToLED(byte[] command)
 		{
 			if (EspIP != null)
 			{
@@ -52,12 +46,12 @@ namespace WinESPStrip
 				IPAddress serverAddr = IPAddress.Parse(EspIP);
 
 				IPEndPoint endPoint = new IPEndPoint(serverAddr, Port);
-				byte[] send_buffer = Encoding.ASCII.GetBytes(command);
+				byte[] send_buffer = command;
 				sock.SendTo(send_buffer, endPoint);
 			}
 			else
 			{
-				MessageBox.Show("Test");
+				MessageBox.Show("Fail");
 			}
 		}
 
@@ -75,6 +69,7 @@ namespace WinESPStrip
 						EspIP = IP.ToString();
 						Dispatcher.Invoke(() => {
 							Log("Connected to ESPStrip");
+							Log("IP: " + EspIP);
 						});
 						
 					}
@@ -90,25 +85,39 @@ namespace WinESPStrip
 			
 		}
 
-		private string CreateESPCommand(int r, int g, int b, int s, int e, int brg, int a, int arg)
+		private byte[] CreateESPCommand(int r, int g, int b, int s, int e, int brg, int a, int arg)
 		{
-			string Command = r + ":" + g + ":" + b + ":" + s + ":" + e + ":" + brg + ":" + a + ":" + arg + ":";
+			byte[] Command = new byte[8] { Convert.ToByte(r), Convert.ToByte(g), Convert.ToByte(b), Convert.ToByte(s), Convert.ToByte(e), Convert.ToByte(brg), Convert.ToByte(a), Convert.ToByte(arg), };
+			
+			foreach (byte i in Command)
+			{
+				buffCommand += i.ToString();
+			}
+
+			Log(buffCommand);
+			buffCommand = "";
 			return Command;
 		}
 
 		private void Log(string i)
 		{
-			Logs.Items.Add(i);
+			Logs.Items.Insert(0, i);
 		}
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			SendUDPToLED(CreateESPCommand(255, 0, 0, 1, 60, 20, 1, 1));
+			SendUDPToLED(CreateESPCommand(255, 0, 0, 1, 60, 255, 1, 1));
+			Log(((char)0).ToString() + "|");
 		}
 
-		private void IPTemp_TextChanged(object sender, TextChangedEventArgs e)
-		{
+		
 
+		private void button1_Click(object sender, RoutedEventArgs e)
+		{
+			string hexR = r.ToString("X2");
+			string hexG = g.ToString("X2");
+			string hexB = b.ToString("X2");
+			Log(hexR + hexG + hexB);
 		}
 
 		private void ClrPcker_Background_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
@@ -116,9 +125,9 @@ namespace WinESPStrip
 			r = Color.SelectedColor.Value.R;
 			g = Color.SelectedColor.Value.G;
 			b = Color.SelectedColor.Value.B;
-			SendUDPToLED(CreateESPCommand(r, g, b, 1, 60, 20, 0, 0));
-
-			Log(Color.SelectedColor.Value.R.ToString() + " " + Color.SelectedColor.Value.G.ToString() + " " +Color.SelectedColor.Value.B.ToString());
+			
+			SendUDPToLED(CreateESPCommand(r, g, b, 1, 60, 255, 0, 1));		
 		}
+
 	}
 }

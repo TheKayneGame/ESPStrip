@@ -15,7 +15,7 @@ CRGB leds[NUM_LEDS];
 int brightness = 255;
 unsigned int port = 53686;
 
-char packetBuffer[255];
+byte packetBuffer[8];
 
 WiFiUDP Udp;
 
@@ -77,7 +77,7 @@ void setup()
 
 	FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS);
 	FastLED.setBrightness(brightness);
-	//FastLED.setMaxPowerInVoltsAndMilliamps(5, 2000);
+	FastLED.setMaxPowerInVoltsAndMilliamps(5, 1000);
 
 	for (int i = 0; i <= NUM_LEDS; i++) {
 		FastLED.clear();
@@ -131,7 +131,7 @@ void loop()
 		//noInterrupts();
 
 		//Reads Packet to string
-		int len = Udp.read(packetBuffer, 255);
+		int len = Udp.read(packetBuffer, packetSize);
 		if (len > 0) {
 			Serial.println(len);
 			packetBuffer[len] = 0;
@@ -139,14 +139,10 @@ void loop()
 
 		}
 
-		Serial.println("Contents:");
-		Serial.println(packetBuffer);
+		for (int i = 0; i < sizeof(packetBuffer) - 1; i++) {
+			Serial.print(packetBuffer[i]);
+		}
 		Serial.println();
-
-		char * temp;
-		Serial.print("Splitting string \"");
-		Serial.print(packetBuffer);
-		Serial.println("\"");
 
 		int r = 0;
 		int b = 0;
@@ -158,6 +154,7 @@ void loop()
 		int arg = 0;
 		
 		//Splitting String to Intergers
+		/*
 		if (temp == NULL) {
 			temp = strtok(packetBuffer, ":");
 			Serial.println(temp);
@@ -204,9 +201,17 @@ void loop()
 			temp = strtok(NULL, ":");
 			Serial.println(temp);
 			arg = atoi(temp);
-		}
+		}*/
 
 		
+		r = packetBuffer[0];
+		g = packetBuffer[1];
+		b = packetBuffer[2];
+		begin = packetBuffer[3];
+		end = packetBuffer[4];
+		brightness = packetBuffer[5];
+		action = packetBuffer[6];
+		arg = packetBuffer[7];
 
 		switch (action)
 		{
@@ -356,3 +361,4 @@ void wifiSetup() {
 	}
 	digitalWrite(0, LOW);
 }
+
