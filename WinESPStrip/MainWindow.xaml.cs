@@ -22,6 +22,7 @@ namespace WinESPStrip
 
 		UdpClient Client = new UdpClient(Port);
 
+        int Command;
 		int r;
 		int g;
 		int b;
@@ -87,7 +88,12 @@ namespace WinESPStrip
 
 		private byte[] CreateESPCommand(int r, int g, int b, int s, int e, int brg, int a, int arg)
 		{
-			byte[] Command = new byte[8] { Convert.ToByte(r), Convert.ToByte(g), Convert.ToByte(b), Convert.ToByte(s), Convert.ToByte(e), Convert.ToByte(brg), Convert.ToByte(a), Convert.ToByte(arg), };
+			byte[] Command = new byte[8] {
+                Convert.ToByte(r), Convert.ToByte(g),
+                Convert.ToByte(b), Convert.ToByte(s),
+                Convert.ToByte(e), Convert.ToByte(brg),
+                Convert.ToByte(a), Convert.ToByte(arg)
+            };
 			
 			foreach (byte i in Command)
 			{

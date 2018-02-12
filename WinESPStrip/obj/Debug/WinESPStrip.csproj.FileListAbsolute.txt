@@ -63,3 +63,4 @@ E:\Projects\Programming\ESPStrip\WinESPStrip\bin\Debug\WriteableBitmapEx.Wpf.pdb
 E:\Projects\Programming\ESPStrip\WinESPStrip\bin\Debug\WriteableBitmapEx.Wpf.xml
 E:\Projects\Programming\ESPStrip\WinESPStrip\bin\Debug\ColorWheel.Controls.dll
 E:\Projects\Programming\ESPStrip\WinESPStrip\bin\Debug\ColorWheel.Core.dll
+E:\Projects\Programming\ESPStrip\WinESPStrip\obj\Debug\WinESPStrip.csprojResolveAssemblyReference.cache

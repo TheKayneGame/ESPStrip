@@ -1,0 +1,15 @@
+E:\Projects\Programming\ESPStrip\App1\bin\Debug\App1.dll
+E:\Projects\Programming\ESPStrip\App1\bin\Debug\App1.pdb
+E:\Projects\Programming\ESPStrip\App1\bin\Debug\App1.App1.apk
+E:\Projects\Programming\ESPStrip\App1\bin\Debug\App1.App1-Signed.apk
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\DroidESPStrip.csprojResolveAssemblyReference.cache
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\App1.dll
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\App1.pdb
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\android\bin\App1.App1.apk
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\res\layout\main.xml
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\res\values\strings.xml
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\res\drawable\icon.png
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\R.cs.flag
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\uploadflags.txt
+E:\Projects\Programming\ESPStrip\App1\bin\Debug\App1.dll.mdb
+E:\Projects\Programming\ESPStrip\App1\obj\Debug\android\assets\App1.dll.mdb

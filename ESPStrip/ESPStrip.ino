@@ -152,7 +152,7 @@ void loop()
 		int brightness = 0;
 		int action = 0;
 		int arg = 0;
-		
+
 		//Splitting String to Intergers
 		/*
 		if (temp == NULL) {
